@@ -1,8 +1,15 @@
+#### Start
+docker-compose up
+
 #### Run Tests
 docker-compose run --rm node yarn test
 
 #### Migrate
 docker-compose run --rm node yarn run migrate
 
-#### Generate a service
-docker-compose run --rm node feathers generate service
+
+
+## Database Commands
+
+#### Generate Model
+docker-compose run --rm node yarn run sequelize model:create

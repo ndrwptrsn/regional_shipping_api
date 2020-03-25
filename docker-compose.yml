@@ -1,12 +1,33 @@
 version: '3'
 services:
+
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=connect
+      - POSTGRES_DB=connect
+      - POSTGRES_PASSWORD=connect
+    networks:
+      - api
+
   node:
     build:
       context: .
     image: regional-shipping-api
+    links:
+           - db
+    networks:
+          - api
     ports:
         - "3000:3000"
     volumes:
         - .:/usr/src/app
     user: '1000'
     command: yarn run start
+    env_file:
+      - ./.env
+
+networks:
+  api:

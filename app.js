@@ -10,7 +10,6 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 var favicon = require('serve-favicon');
-var path = require('path');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
