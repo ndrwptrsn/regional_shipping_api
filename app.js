@@ -4,17 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var rulesRouter = require('./routes/rules');
-var sellersRouter = require('./routes/sellers');
-var categoriesRouter = require('./routes/categories');
+var router = require('./server/routes/index');
 
 var app = express();
 
 var favicon = require('serve-favicon');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, './server/views/'));
 app.set('view engine', 'jade');
 
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
@@ -25,10 +22,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/rules', rulesRouter);
-app.use('/sellers', sellersRouter);
-app.use('/categories', categoriesRouter);
+app.use('/', router);
+
+// app.use(express.static(__dirname + '/client/dist'));
+// app.use('/', express.static(__dirname + '/client/dist'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
