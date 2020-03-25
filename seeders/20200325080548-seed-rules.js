@@ -6,18 +6,16 @@ module.exports = {
       return Promise.all([
         queryInterface.bulkInsert('Rules', [{
           label: 'minimum_price',
-          parameters: JSON.stringify({
-            value: 1000,
-            function: '>'
-          }),
+          attribute: 'price',
+          operator: '>',
+          comparator: JSON.stringify([1000]),
           createdAt: new Date(),
           updatedAt: new Date()
         }, {
-          label: 'seasons',
-          parameters: JSON.stringify({
-            value: ['spring', 'fall'],
-            function: 'in'
-          }),
+          label: 'active_season',
+          attribute: 'createdAt',
+          operator: 'between',
+          comparator: JSON.stringify(['1591230018000', '1593822018000']),
           createdAt: new Date(),
           updatedAt: new Date()
         }], {})

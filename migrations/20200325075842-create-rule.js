@@ -11,7 +11,13 @@ module.exports = {
       label: {
         type: Sequelize.STRING
       },
-      parameters: {
+      attribute: {
+        type: Sequelize.STRING
+      },
+      operator: {
+        type: Sequelize.STRING
+      },
+      comparator: {
         type: Sequelize.JSONB
       },
       createdAt: {

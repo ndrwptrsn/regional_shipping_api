@@ -1,6 +1,334 @@
 extends layout
 
 block content
-  img.className#IdName(src="images/logo.png" alt="eBay" style="width:100px;")
-  h1= title
-  p Andrew Peterson coding assessment March 2020
+  .rex
+    .ex
+      img.className#IdName(src="images/logo.png" alt="eBay" style="height:75px;")
+      h1= title
+      p Andrew Peterson coding assessment March 2020
+    .ex2
+    .ex3
+
+      h3 docs
+
+      p check item eligibility
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+      p get eligibility rules
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+      p get eligibility rule by id
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+      p add eligibility rule
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+      p remove eligibility rule
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+      p update eligibility rule
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+
+      p get all enrolled sellers
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+      p get enrolled seller by username
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+      p add enrolled seller
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+      p remove seller from enrollment
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+
+      p get all eligible categories
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+      p get eligible category by ebay_id
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+      p add eligible category
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
+
+
+      p remove eligible category
+      .code-contain
+        .code-block
+          code POST http://localhost:3000/
+          .code-block
+            p request
+            pre
+              p
+                | {
+                |    "title": "!959 Goya Nylon String Guitar",
+                |    "price": 31500,
+                |    "seller":"ndrwptrsn",
+                |    "category":"33021"
+                | }
+            p response
+            pre
+              p
+                | {
+                |    "elligible": false,
+                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                | }
