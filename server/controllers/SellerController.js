@@ -46,7 +46,7 @@ exports.removeSeller = async (req, res) => {
   });
   if (seller) {
     await seller.destroy();
-    return res.status(200).json('seller ' + username + ' removed.');
+    return res.status(200).json('seller ' + username + ' removed');
   } else {
     return res.status(200).json('seller ' + username + ' not found');
   }

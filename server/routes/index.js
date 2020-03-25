@@ -14,9 +14,13 @@ apiRouter.post('/', function(req, res, next) {
 
 // load validators
 const SellerValidator = require('../middleware/validators/SellerValidator');
+const RuleValidator = require('../middleware/validators/RuleValidator');
+// const CategoryValidator = require('../middleware/validators/CategoryValidator');
 
 // load controllers
 const SellerController = require('../controllers/SellerController');
+const RuleController = require('../controllers/RuleController');
+// const CategoryController = require('../controllers/CategoryController');
 
 // seller routes
 apiRouter.get('/sellers', SellerValidator.getSellers, SellerController.getSellers);
@@ -25,6 +29,11 @@ apiRouter.post('/sellers', SellerValidator.addSeller, SellerController.addSeller
 apiRouter.delete('/sellers/:username', SellerValidator.removeSeller, SellerController.removeSeller);
 
 // rule routes
+apiRouter.get('/rules', RuleValidator.getRules, RuleController.getRules);
+apiRouter.get('/rules/:id', RuleValidator.getRule, RuleController.getRule);
+apiRouter.delete('/rules/:id', RuleValidator.removeRule, RuleController.removeRule);
+apiRouter.post('/rules', RuleValidator.addRule, RuleController.addRule);
+// apiRouter.post('/rules/:id', RuleValidator.updateRule, RuleController.addRule);
 
 // category routes
 

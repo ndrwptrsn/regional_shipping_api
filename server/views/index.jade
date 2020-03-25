@@ -36,93 +36,98 @@ block content
       p get eligibility rules
       .code-contain
         .code-block
-          code POST http://localhost:3000/
+          code GET http://localhost:3000/rules
           .code-block
-            p request
-            pre
-              p
-                | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
-                | }
             p response
             pre
               p
-                | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
-                | }
+              | [
+              |  {
+              |   "id": 1,
+              |   "label": "eligible_seller",
+              |   "attribute": "seller",
+              |   "operator": "in",
+              |   "comparator": {
+              |    "model": "Seller",
+              |    "attribute": "username"
+              |   },
+              |   "createdAt": "2020-03-25T11:38:44.694Z",
+              |   "updatedAt": "2020-03-25T11:38:44.694Z"
+              |  },
+              |  {
+              |   "id": 2,
+              |   "label": "eligible_category",
+              |   "attribute": "category",
+              |   "operator": "in",
+              |   "comparator": {
+              |    "model": "Category",
+              |    "attribute": "ebay_id"
+              |   },
+              |   "createdAt": "2020-03-25T11:38:44.694Z",
+              |   "updatedAt": "2020-03-25T11:38:44.694Z"
+              |  },
+              |  {
+              |   "id": 3,
+              |   "label": "minimum_price",
+              |   "attribute": "price",
+              |   "operator": ">",
+              |   "comparator": [
+              |    1000
+              |   ],
+              |   "createdAt": "2020-03-25T11:38:44.694Z",
+              |   "updatedAt": "2020-03-25T11:38:44.694Z"
+              |  },
+              |  {
+              |   "id": 4,
+              |   "label": "active_season",
+              |   "attribute": "createdAt",
+              |   "operator": "between",
+              |   "comparator": [
+              |    "1591230018000",
+              |    "1593822018000"
+              |   ],
+              |   "createdAt": "2020-03-25T11:38:44.694Z",
+              |   "updatedAt": "2020-03-25T11:38:44.694Z"
+              |  }
+              | ]
 
 
-      p get eligibility rule by id
+      p get eligibility rule by id or label
       .code-contain
         .code-block
-          code POST http://localhost:3000/
+          code GET http://localhost:3000/rules/1
+          br
+          code GET http://localhost:3000/rules/eligible_seller
           .code-block
-            p request
-            pre
-              p
-                | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
-                | }
             p response
             pre
               p
-                | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
-                | }
+              | {
+              |  "id": 1,
+              |  "label": "eligible_seller",
+              |  "attribute": "seller",
+              |  "operator": "in",
+              |  "comparator": {
+              |   "model": "Seller",
+              |   "attribute": "username"
+              |  },
+              |  "createdAt": "2020-03-25T11:38:44.694Z",
+              |  "updatedAt": "2020-03-25T11:38:44.694Z"
+              | }
 
-
-      p add eligibility rule
+      p remove eligibility rule by id or label
       .code-contain
         .code-block
-          code POST http://localhost:3000/
+          code DELETE http://localhost:3000/rules/1
+          br
+          code DELETE http://localhost:3000/rules/eligible_seller
           .code-block
-            p request
-            pre
-              p
-                | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
-                | }
             p response
             pre
               p
-                | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
-                | }
+                | "rule with id: 1 and label: eligible_seller removed"
 
 
-      p remove eligibility rule
-      .code-contain
-        .code-block
-          code POST http://localhost:3000/
-          .code-block
-            p request
-            pre
-              p
-                | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
-                | }
-            p response
-            pre
-              p
-                | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
-                | }
 
 
       p update eligibility rule
@@ -149,7 +154,7 @@ block content
 
 
 
-      p get all enrolled sellers
+      p add eligibility rule
       .code-contain
         .code-block
           code POST http://localhost:3000/
@@ -170,75 +175,84 @@ block content
                 |    "elligible": false,
                 |    "reason": "item.price 34999 !>= price_minimum 40000"
                 | }
+
+
+
+
+
+
+
+      p get all enrolled sellers
+      .code-contain
+        .code-block
+          code GET http://localhost:3000/sellers
+          .code-block
+            p response
+            pre
+              p
+                | [
+                |  {
+                |    "id": 1,
+                |    "username": "ndrwptrsn",
+                |    "createdAt": "2020-03-25T11:38:44.756Z",
+                |    "updatedAt": "2020-03-25T11:38:44.756Z"
+                |  },
+                |  {
+                |    "id": 2,
+                |    "username": "aeeeo",
+                |    "createdAt": "2020-03-25T17:31:41.385Z",
+                |    "updatedAt": "2020-03-25T17:31:41.385Z"
+                |  },
+                |]
 
 
       p get enrolled seller by username
       .code-contain
         .code-block
-          code POST http://localhost:3000/
+          code GET http://localhost:3000/sellers/ndrwptrsn
           .code-block
-            p request
-            pre
-              p
-                | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
-                | }
             p response
             pre
               p
                 | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                |   "id": 1,
+                |   "username": "ndrwptrsn",
+                |   "createdAt": "2020-03-25T11:38:44.756Z",
+                |   "updatedAt": "2020-03-25T11:38:44.756Z"
                 | }
 
 
-      p add enrolled seller
+      p add seller to enrollment
       .code-contain
         .code-block
-          code POST http://localhost:3000/
+          code POST http://localhost:3000/sellers
           .code-block
             p request
             pre
               p
                 | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
+                |    "username": "atman84"
                 | }
             p response
             pre
               p
-                | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
-                | }
+              | {
+              |   "id": 1,
+              |   "username": "atman84",
+              |   "createdAt": "2020-03-25T11:38:44.756Z",
+              |   "updatedAt": "2020-03-25T11:38:44.756Z"
+              | }
 
 
       p remove seller from enrollment
       .code-contain
         .code-block
-          code POST http://localhost:3000/
+          code DELETE http://localhost:3000/atman84
           .code-block
-            p request
-            pre
-              p
-                | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
-                | }
             p response
             pre
               p
-                | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
-                | }
+                | "seller atman84 removed"
 
 
 
