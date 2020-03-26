@@ -5,10 +5,11 @@ Andrew Peterson March 2020
 
 Thank you for reviewing my assessment, I had a lot of fun working on it!
 
+The API is a Dockerized Express application using Postgres for data storage. The data structure is three tables, Sellers, Categories, and Rules.
+
 I prioritized API functionality (dynamic stored rules feature, exposed endpoints) and API integrity (validations, tests) over front-end tooling (which seems like the kind of thing that would be added to a pre-existing admin panel anyway). I did spruce up the docs a bit: http://localhost:3000/api
 
-Each eligibility rule uses an operator (<, >, <=, =>, =, in, between), a comparator (either a list of something in the db to check against, a value, or range of values) and a target (the part of the incoming request that gets checked). Each rule gets processed, even if prior rules didn't pass. The response consists of whether or not the item is eligible and why:
-
+Each eligibility rule uses an operator (<, >, <=, =>, =, in, between), a comparator (either a list of something in the db to check against, a value, or range of values) and a target (the part of the incoming request that gets checked). Each rule gets processed, even if some rules don't pass. The response consists of whether or not the item is eligible and which rules passed/failed and why:
 
 
 ```
@@ -160,6 +161,8 @@ POST http://localhost:3000/api/rules
 I had a ton of fun working on this! I put some serious time in and I hope it shows. The API could definitely use some refactoring, but I wanted to get it done. I chose not to add authentication to make it easy to play with. Along the same lines I've included a PostMan collection so you don't have to make your own.
 
 Thank you!
+
+# Setup
 
 #### Start
 docker-compose up
