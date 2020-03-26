@@ -14,7 +14,7 @@ block content
       p check item eligibility
       .code-contain
         .code-block
-          code POST http://localhost:3000/
+          code POST http://localhost:3000/api
           .code-block
             pre
               p
@@ -32,11 +32,10 @@ block content
                 |    "reason": "item.price 34999 !>= price_minimum 40000"
                 | }
 
-
       p get eligibility rules
       .code-contain
         .code-block
-          code GET http://localhost:3000/rules
+          code GET http://localhost:3000/api/rules
           .code-block
             p response
             pre
@@ -91,13 +90,12 @@ block content
               |  }
               | ]
 
-
       p get eligibility rule by id or label
       .code-contain
         .code-block
-          code GET http://localhost:3000/rules/1
+          code GET http://localhost:3000/api/rules/1
           br
-          code GET http://localhost:3000/rules/eligible_seller
+          code GET http://localhost:3000/api/rules/eligible_seller
           .code-block
             p response
             pre
@@ -115,45 +113,6 @@ block content
               |  "updatedAt": "2020-03-25T11:38:44.694Z"
               | }
 
-      p remove eligibility rule by id or label
-      .code-contain
-        .code-block
-          code DELETE http://localhost:3000/rules/1
-          br
-          code DELETE http://localhost:3000/rules/eligible_seller
-          .code-block
-            p response
-            pre
-              p
-                | "rule with id: 1 and label: eligible_seller removed"
-
-
-
-
-      p update eligibility rule
-      .code-contain
-        .code-block
-          code POST http://localhost:3000/
-          .code-block
-            p request
-            pre
-              p
-                | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
-                | }
-            p response
-            pre
-              p
-                | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
-                | }
-
-
-
       p add eligibility rule
       .code-contain
         .code-block
@@ -162,23 +121,69 @@ block content
             p request
             pre
               p
+              | {
+              |  "label": "summer_sale",
+              |  "attribute": "date",
+              |  "operator": "between",
+              |  "comparator": [
+              |   "1591230018000",
+              |   "1593822018000"
+              |  ]
+              | }
+            p response
+            pre
+              p
+              | {
+              |  "id": 5,
+              |  "label": "summer_sale",
+              |  "attribute": "date",
+              |  "operator": "between",
+              |  "comparator": [
+              |   "1591230018000",
+              |   "1593822018000"
+              |  ]
+              |  "createdAt": "2020-03-25T11:38:44.694Z",
+              |  "updatedAt": "2020-03-25T11:38:44.694Z"
+              | }
+
+      p remove eligibility rule by id or label
+      .code-contain
+        .code-block
+          code DELETE http://localhost:3000/api/rules/1
+          br
+          code DELETE http://localhost:3000/api/rules/eligible_seller
+          .code-block
+            p response
+            pre
+              p
+                | "rule with id: 1 and label: eligible_seller removed"
+
+      p update eligibility rule
+      .code-contain
+        .code-block
+          code PATCH http://localhost:3000/api/rules/1
+          .code-block
+            p request
+            pre
+              p
                 | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
+                |    "label": "enrolled_seller"
                 | }
             p response
             pre
               p
-                | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
-                | }
-
-
-
-
+              | {
+              |  "id": 1,
+              |  "label": "enrolled_seller",
+              |  "attribute": "seller",
+              |  "operator": "in",
+              |  "comparator": {
+              |   "model": "Seller",
+              |   "attribute": "username"
+              |  },
+              |  "createdAt": "2020-03-25T11:38:44.694Z",
+              |  "updatedAt": "2020-03-25T11:38:44.694Z"
+              | }
 
 
 
