@@ -41,6 +41,18 @@ GET http://localhost:3000/api/rules
 
 [
     {
+        "id": 1,
+        "label": "enrolled_seller",
+        "target": "seller",
+        "operator": "in",
+        "comparator": {
+            "model": "Seller",
+            "attribute": "username"
+        },
+        "createdAt": "2020-03-26T19:17:37.203Z",
+        "updatedAt": "2020-03-26T19:18:22.555Z"
+    },
+    {
         "id": 2,
         "label": "eligible_category",
         "target": "category",
@@ -86,18 +98,6 @@ GET http://localhost:3000/api/rules
         ],
         "createdAt": "2020-03-26T19:17:37.203Z",
         "updatedAt": "2020-03-26T19:17:37.203Z"
-    },
-    {
-        "id": 1,
-        "label": "enrolled_seller",
-        "target": "price",
-        "operator": "in",
-        "comparator": {
-            "model": "Seller",
-            "attribute": "username"
-        },
-        "createdAt": "2020-03-26T19:17:37.203Z",
-        "updatedAt": "2020-03-26T19:18:22.555Z"
     }
 ]
 ```
