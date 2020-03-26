@@ -121,7 +121,7 @@ The test coverage isn't great (~25%), as I didn't have the time. However, I wrot
 
 #### Adding Rules
 
-'Arithmetic' rules are easy to add, simply post to api/rules with a value or value range and a target attribute. Date uses date.now() internally, the only allowed target which does not need to be supplied in the eligibility check request.
+'Arithmetic' rules are easy to add, simply post to api/rules with a value or value range and a target attribute. Date is the only allowed target value which does not need to be supplied in the eligibility check request (uses new Date()).
 
 ```
 add 'arithmetic' rule
