@@ -9,6 +9,8 @@ I prioritized API functionality (dynamic, stored rules feature, exposed endpoint
 
 Each eligibility rule uses an operator (<, >, <=, =>, =, in, between), a comparator (either a list of something in the db to check against, a value, or range of values) and a target (the part of the incoming request that gets checked). Each rule gets processed, even if prior rules didn't pass. The response consists of whether or not the item is eligible and why:
 
+
+##### Eligibility Endpoint
 ```
 POST http://localhost:3000/api
 
@@ -32,6 +34,75 @@ POST http://localhost:3000/api
    ]
 }
 ```
+
+##### Get all rules endpoint
+```
+GET http://localhost:3000/api/rules
+
+[
+    {
+        "id": 2,
+        "label": "eligible_category",
+        "target": "category",
+        "operator": "in",
+        "comparator": {
+            "model": "Category",
+            "attribute": "ebay_id"
+        },
+        "createdAt": "2020-03-26T19:17:37.203Z",
+        "updatedAt": "2020-03-26T19:17:37.203Z"
+    },
+    {
+        "id": 3,
+        "label": "minimum_price",
+        "target": "price",
+        "operator": ">",
+        "comparator": [
+            1000
+        ],
+        "createdAt": "2020-03-26T19:17:37.203Z",
+        "updatedAt": "2020-03-26T19:17:37.203Z"
+    },
+    {
+        "id": 4,
+        "label": "active_season",
+        "target": "date",
+        "operator": "between",
+        "comparator": [
+            "1591230018000",
+            "1593822018000"
+        ],
+        "createdAt": "2020-03-26T19:17:37.203Z",
+        "updatedAt": "2020-03-26T19:17:37.203Z"
+    },
+    {
+        "id": 5,
+        "label": "pricerange",
+        "target": "price",
+        "operator": "between",
+        "comparator": [
+            59999,
+            57777
+        ],
+        "createdAt": "2020-03-26T19:17:37.203Z",
+        "updatedAt": "2020-03-26T19:17:37.203Z"
+    },
+    {
+        "id": 1,
+        "label": "enrolled_seller",
+        "target": "price",
+        "operator": "in",
+        "comparator": {
+            "model": "Seller",
+            "attribute": "username"
+        },
+        "createdAt": "2020-03-26T19:17:37.203Z",
+        "updatedAt": "2020-03-26T19:18:22.555Z"
+    }
+]
+```
+
+
 Because all of the eligibility rules are stored in the db using the same format, there are many, many permutations of possible rules that can be created, updated, and destroyed programmatically without having to touch the code at all. This is the strength of this approach.
 
 To that end, I focused my efforts on validations and tests instead of menus, buttons, and sliders. Most of the validations are to make sure that non-sensical rule objects do not get made. For example, a rule object which is looking for a price between [1099] doesn't make sense but a rule object looking for a price between [3599, 1099] does (order gets sorted, no big deal. negative values thrown out, however). I encourage you to try making rules that don't make sense as I did my best to cover these scenarios with specific, helpful error messaging. It is possible to update a rule so that it is no longer valid. In these cases I tried to provide messaging at the point of checking eligibility - if any of the rules are invalid, the eligibility endpoint will let you know.
