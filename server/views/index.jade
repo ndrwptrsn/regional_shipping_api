@@ -19,7 +19,7 @@ block content
             pre
               p
                 | {
-                |    "title": "!959 Goya Nylon String Guitar",
+                |    "title": "1959 Goya Nylon String Guitar",
                 |    "price": 31500,
                 |    "seller":"ndrwptrsn",
                 |    "category":"33021"
@@ -28,8 +28,14 @@ block content
             pre
               p
                 | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                |    "eligible": false,
+                |    "reason": [
+                |     "rule 1: passed",
+                |     "rule 2: provided category 12345 is not in model Category attribute ebay_id",
+                |     "rule 3: provided price 123 is not > 1000",
+                |     "rule 4: today's date 2020-03-26T17:24:02.647Z is not between
+                |     2020-06-04T00:20:18.000Z & 2020-07-04T00:20:18.000Z",
+                |    ]
                 | }
 
       p get eligibility rules
@@ -44,7 +50,7 @@ block content
               |  {
               |   "id": 1,
               |   "label": "eligible_seller",
-              |   "attribute": "seller",
+              |   "target": "seller",
               |   "operator": "in",
               |   "comparator": {
               |    "model": "Seller",
@@ -56,7 +62,7 @@ block content
               |  {
               |   "id": 2,
               |   "label": "eligible_category",
-              |   "attribute": "category",
+              |   "target": "category",
               |   "operator": "in",
               |   "comparator": {
               |    "model": "Category",
@@ -68,7 +74,7 @@ block content
               |  {
               |   "id": 3,
               |   "label": "minimum_price",
-              |   "attribute": "price",
+              |   "target": "price",
               |   "operator": ">",
               |   "comparator": [
               |    1000
@@ -79,7 +85,7 @@ block content
               |  {
               |   "id": 4,
               |   "label": "active_season",
-              |   "attribute": "createdAt",
+              |   "target": "createdAt",
               |   "operator": "between",
               |   "comparator": [
               |    "1591230018000",
@@ -103,7 +109,7 @@ block content
               | {
               |  "id": 1,
               |  "label": "eligible_seller",
-              |  "attribute": "seller",
+              |  "target": "seller",
               |  "operator": "in",
               |  "comparator": {
               |   "model": "Seller",
@@ -122,7 +128,7 @@ block content
                 p
                 | {
                 |  "label": "summer_sale",
-                |  "attribute": "date",
+                |  "target": "date",
                 |  "operator": "between",
                 |  "comparator": [
                 |   "1591230018000",
@@ -135,7 +141,7 @@ block content
                 | {
                 |  "id": 5,
                 |  "label": "summer_sale",
-                |  "attribute": "date",
+                |  "target": "date",
                 |  "operator": "between",
                 |  "comparator": [
                 |   "1591230018000",
@@ -161,7 +167,7 @@ block content
               | {
               |  "id": 1,
               |  "label": "enrolled_seller",
-              |  "attribute": "seller",
+              |  "target": "seller",
               |  "operator": "in",
               |  "comparator": {
               |   "model": "Seller",

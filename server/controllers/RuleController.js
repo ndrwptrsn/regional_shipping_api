@@ -48,7 +48,7 @@ exports.addRule = async (req, res) => {
   const reqData = req.body;
   const {
     label,
-    attribute,
+    target,
     operator,
     comparator
   } = reqData;
@@ -63,7 +63,7 @@ exports.addRule = async (req, res) => {
   } else {
     rule = await Rule.create({
       label: label,
-      attribute: attribute,
+      target: target,
       operator: operator,
       comparator: comparator
     });

@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Rule = sequelize.define('Rule', {
     label: DataTypes.STRING,
-    attribute: DataTypes.STRING,
+    target: DataTypes.STRING,
     operator: DataTypes.STRING,
     comparator: DataTypes.JSONB
   }, {});

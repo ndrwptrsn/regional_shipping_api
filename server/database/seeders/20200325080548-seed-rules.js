@@ -6,7 +6,7 @@ module.exports = {
       return Promise.all([
         queryInterface.bulkInsert('Rules', [{
           label: 'eligible_seller',
-          attribute: 'seller',
+          target: 'seller',
           operator: 'in',
           comparator: JSON.stringify({
             model: 'Seller',
@@ -16,7 +16,7 @@ module.exports = {
           updatedAt: new Date()
         }, {
           label: 'eligible_category',
-          attribute: 'category',
+          target: 'category',
           operator: 'in',
           comparator: JSON.stringify({
             model: 'Category',
@@ -26,21 +26,21 @@ module.exports = {
           updatedAt: new Date()
         }, {
           label: 'minimum_price',
-          attribute: 'price',
+          target: 'price',
           operator: '>',
           comparator: JSON.stringify([1000]),
           createdAt: new Date(),
           updatedAt: new Date()
         }, {
           label: 'active_season',
-          attribute: 'date',
+          target: 'date',
           operator: 'between',
           comparator: JSON.stringify(['1591230018000', '1593822018000']),
           createdAt: new Date(),
           updatedAt: new Date()
         }, {
           label: 'pricerange',
-          attribute: 'price',
+          target: 'price',
           operator: 'between',
           comparator: JSON.stringify([59999, 57777]),
           createdAt: new Date(),

@@ -39,7 +39,7 @@ exports.addCategory = async (req, res) => {
 };
 
 exports.removeCategory = async (req, res) => {
-  const reqData = req.body;
+  const reqData = req.params;
   const { ebay_id } = reqData;
   let category = await Category.findOne({
     where: {

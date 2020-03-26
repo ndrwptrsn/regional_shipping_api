@@ -17,6 +17,16 @@ before('clearDb of data', async () => {
   );
 });
 
+after('clearDb of data', async () => {
+  await Promise.all(
+    _.map(Object.keys(models), (key) => {
+      if (['sequelize', 'Sequelize'].includes(key)) return null;
+      console.log(key + ' cleared!');
+      return models[key].destroy({ truncate : true, restartIdentity: true, cascade: true });
+    })
+  );
+});
+
 describe("rules controller", () => {
 
   it("should successfully create valid eligibility rule", (done) => {
@@ -24,7 +34,7 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'eligible_seller',
-      attribute: 'seller',
+      target: 'seller',
       operator: 'in',
       comparator: {
         model: 'Seller',
@@ -46,7 +56,7 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'eligible_category',
-      attribute: 'category',
+      target: 'category',
       operator: 'in',
       comparator: {
         model: 'Category',
@@ -151,35 +161,35 @@ describe("rules controller", () => {
     })
     .end((err, res) => {
       res.should.have.status(422);
-      res.body.should.have.property('message').equal('required field \'attribute\' is missing');
+      res.body.should.have.property('message').equal('required field \'target\' is missing');
       done();
     });
   });
 
-  it("should return 422 code for invalid attribute format", (done) => {
+  it("should return 422 code for invalid target format", (done) => {
     chai.request(app)
     .post('/api/rules')
     .send({
       label: 'label',
-      attribute:[12,12]
+      target:[12,12]
     })
     .end((err, res) => {
       res.should.have.status(422);
-      res.body.should.have.property('message').equal('required field \'attribute\' should be a string');
+      res.body.should.have.property('message').equal('required field \'target\' should be a string');
       done();
     });
   });
 
-  it("should return 422 code for invalid attribute value", (done) => {
+  it("should return 422 code for invalid target value", (done) => {
     chai.request(app)
     .post('/api/rules')
     .send({
       label: 'label',
-      attribute:'banana'
+      target:'banana'
     })
     .end((err, res) => {
       res.should.have.status(422);
-      res.body.should.have.property('message').equal('required field \'attribute\' must match an available fields: price, seller, category, date');
+      res.body.should.have.property('message').equal('required field \'target\' must match an available fields: price, seller, category, date');
       done();
     });
   });
@@ -190,7 +200,7 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'label',
-      attribute: 'seller'
+      target: 'seller'
     })
     .end((err, res) => {
       res.should.have.status(422);
@@ -204,7 +214,7 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'label',
-      attribute: 'seller',
+      target: 'seller',
       operator: '+'
     })
     .end((err, res) => {
@@ -220,13 +230,13 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'label',
-      attribute: 'seller',
+      target: 'seller',
       operator: 'in',
       comparator: 'string'
     })
     .end((err, res) => {
       res.should.have.status(422);
-      res.body.should.have.property('message').equal('required field \'comparator\' must be either an array with 1-2 numerical values or an object with valid model and attribute fields');
+      res.body.should.have.property('message').equal('required field \'comparator\' must be either an array with 1-2 positive numerical values or an object with valid model and attribute fields');
       done();
     });
   });
@@ -236,7 +246,7 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'label',
-      attribute: 'seller',
+      target: 'seller',
       operator: 'in',
       comparator: {
         model: 'seller'
@@ -244,7 +254,7 @@ describe("rules controller", () => {
     })
     .end((err, res) => {
       res.should.have.status(422);
-      res.body.should.have.property('message').equal('required field \'comparator\' must be either an array with 1-2 numerical values or an object with valid model and attribute fields');
+      res.body.should.have.property('message').equal('required field \'comparator\' must be either an array with 1-2 positive numerical values or an object with valid model and attribute fields');
       done();
     });
   });
@@ -254,7 +264,7 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'label',
-      attribute: 'seller',
+      target: 'seller',
       operator: 'in',
       comparator: {
         model: 'sailor',
@@ -263,7 +273,7 @@ describe("rules controller", () => {
     })
     .end((err, res) => {
       res.should.have.status(422);
-      res.body.should.have.property('message').equal('required field \'comparator\' must be either an array with 1-2 numerical values or an object with valid model and attribute fields');
+      res.body.should.have.property('message').equal('required field \'comparator\' must be either an array with 1-2 positive numerical values or an object with valid model and attribute fields');
       done();
     });
   });
@@ -274,7 +284,7 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'label',
-      attribute: 'seller',
+      target: 'seller',
       operator: '>',
       comparator: {
         model: 'seller',
@@ -293,7 +303,7 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'label',
-      attribute: 'seller',
+      target: 'seller',
       operator: '>',
       comparator: [12,12]
     })
@@ -309,7 +319,7 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'eligible_seller',
-      attribute: 'seller',
+      target: 'seller',
       operator: 'in',
       comparator: {
         model: 'Seller',
@@ -331,7 +341,7 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'eligible_category',
-      attribute: 'category',
+      target: 'category',
       operator: 'in',
       comparator: {
         model: 'Category',
@@ -353,7 +363,7 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'minimum_price',
-      attribute: 'price',
+      target: 'price',
       operator: '>',
       comparator: [1000],
       createdAt: new Date(),
@@ -372,7 +382,7 @@ describe("rules controller", () => {
     .post('/api/rules')
     .send({
       label: 'active_season',
-      attribute: 'date',
+      target: 'date',
       operator: 'between',
       comparator: ['1591230018000', '1593822018000'],
       createdAt: new Date(),

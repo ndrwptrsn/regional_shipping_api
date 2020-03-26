@@ -16,10 +16,10 @@ const routesValidator = {
       }).withMessage('required field \'category\' must be an integer'),
     body('title')
       .not().isEmpty().withMessage('required field \'title\' is missing')
-      .isString().withMessage('required field \'attribute\' should be a string'),
+      .isString().withMessage('required field \'title\' should be a string'),
     body('seller')
       .not().isEmpty().withMessage('required field \'seller\' is missing')
-      .isString().withMessage('required field \'attribute\' should be a string')
+      .isString().withMessage('required field \'seller\' should be a string')
   ]
 };
 

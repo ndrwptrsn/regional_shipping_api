@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "yarn run migrate && NODE_ENV= yarn run mocha",
+    "test": "yarn run migrate && yarn run seed && NODE_ENV= yarn run mocha && yarn run seed",
     "mocha": "mocha ./server/tests --recursive --exit --timeout 50000",
     "start": "node ./bin/www",
     "migrate": "sequelize db:migrate",

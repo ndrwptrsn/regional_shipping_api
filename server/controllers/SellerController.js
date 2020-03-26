@@ -39,7 +39,7 @@ exports.addSeller = async (req, res) => {
 };
 
 exports.removeSeller = async (req, res) => {
-  const reqData = req.body;
+  const reqData = req.params;
   const { username } = reqData;
   let seller = await Seller.findOne({
     where: {

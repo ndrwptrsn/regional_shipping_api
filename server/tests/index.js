@@ -7,7 +7,7 @@ const _ = require('lodash');
 chai.use(chaiHttp);
 chai.should();
 
-before('clearDb of data', async () => {
+after('clearDb of data', async () => {
   await Promise.all(
     _.map(Object.keys(models), (key) => {
       if (['sequelize', 'Sequelize'].includes(key)) return null;
@@ -19,7 +19,7 @@ before('clearDb of data', async () => {
 
 describe("regional shipping program eligibility test", async () => {
 
-  describe("seed", async () => {
+  describe("is it eligible", async () => {
 
     // it("should return not eligible", (done) => {
     //   chai.request(app)

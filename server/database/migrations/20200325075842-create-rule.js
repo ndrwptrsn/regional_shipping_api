@@ -11,7 +11,7 @@ module.exports = {
       label: {
         type: Sequelize.STRING
       },
-      attribute: {
+      target: {
         type: Sequelize.STRING
       },
       operator: {

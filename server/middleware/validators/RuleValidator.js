@@ -34,12 +34,12 @@ const routesValidator = {
       .not().isEmpty().withMessage('required field \'label\' is missing')
       .isString().withMessage('required field \'label\' should be a string'),
 
-    body('attribute')
-      .not().isEmpty().withMessage('required field \'attribute\' is missing')
-      .isString().withMessage('required field \'attribute\' should be a string')
+    body('target')
+      .not().isEmpty().withMessage('required field \'target\' is missing')
+      .isString().withMessage('required field \'target\' should be a string')
       .custom((value) => {
         return _.includes(available_fields, value);
-      }).withMessage('required field \'attribute\' must match an available fields: price, seller, category, date'),
+      }).withMessage('required field \'target\' must match an available fields: price, seller, category, date'),
 
     body('operator')
       .not().isEmpty().withMessage('required field \'operator\' is missing')
@@ -72,6 +72,9 @@ const routesValidator = {
             if (isNaN(value[i])) {
               return false;
             }
+            if (parseInt(value[i], 10) < 0) {
+              return false;
+            }
           }
           return true;
         } else if (typeof(value) === 'object' && value.hasOwnProperty('model') && value.hasOwnProperty('attribute')) {
@@ -84,7 +87,7 @@ const routesValidator = {
           }
         }
         return false;
-      }).withMessage('required field \'comparator\' must be either an array with 1-2 numerical values or an object with valid model and attribute fields'),
+      }).withMessage('required field \'comparator\' must be either an array with 1-2 positive numerical values or an object with valid model and attribute fields'),
   ],
 
   updateRule: [
@@ -92,12 +95,12 @@ const routesValidator = {
       .optional()
       .isString().withMessage('required field \'label\' should be a string'),
 
-    body('attribute')
+    body('target')
       .optional()
-      .isString().withMessage('required field \'attribute\' should be a string')
+      .isString().withMessage('required field \'target\' should be a string')
       .custom((value) => {
         return _.includes(available_fields, value);
-      }).withMessage('required field \'attribute\' must match an available fields: price, seller, category, date'),
+      }).withMessage('required field \'target\' must match an available fields: price, seller, category, date'),
 
     body('operator')
       .optional()
@@ -106,20 +109,24 @@ const routesValidator = {
       }).withMessage('required field \'operator\' must match an available operators: \'=\', \'<\', \'>\', \'<=\', \'>=\' \'between\', or \'in\''),
 
     body()
+      .optional()
       .custom((req) => {
-        let single_comparator_operators = ['=','>','<','>=','<='];
-        if (Array.isArray(req.comparator) && _.includes(single_comparator_operators, req.operator)) {
-          return req.comparator.length === 1;
+        if (req.comparator || req.operator) {
+          let single_comparator_operators = ['=','>','<','>=','<='];
+          if (Array.isArray(req.comparator) && _.includes(single_comparator_operators, req.operator)) {
+            return req.comparator.length === 1;
+          }
+          if (Array.isArray(req.comparator) && req.operator == 'between') {
+            return req.comparator.length === 2;
+          }
+          if (Array.isArray(req.comparator) && req.operator == 'in') {
+            return false;
+          }
+          if (!Array.isArray(req.comparator) && req.operator == 'in') {
+            return true;
+          }
         }
-        if (Array.isArray(req.comparator) && req.operator == 'between') {
-          return req.comparator.length === 2;
-        }
-        if (Array.isArray(req.comparator) && req.operator == 'in') {
-          return false;
-        }
-        if (!Array.isArray(req.comparator) && req.operator == 'in') {
-          return true;
-        }
+        return true;
       }).withMessage('\'=\', \'>\', \'<\', \'>=\', \'<=\' operators can only have one comparator, \'between\' operator must have exactly two comparators, and \'in\' operator is for use with models only'),
 
     body('comparator')

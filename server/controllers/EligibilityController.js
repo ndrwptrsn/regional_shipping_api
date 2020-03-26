@@ -11,20 +11,32 @@ exports.checkEligibility = async (req, res) => {
     return rule.dataValues;
   });
 
-  let passArr = await Promise.mapSeries(ruleArr, async (rule) => {
-    let reqAttributeValue = reqData[rule.attribute];
+  let failArr = [];
+
+  let invalidRules = false;
+
+  let explanationArr = await Promise.mapSeries(ruleArr, async (rule) => {
+    let reqAttributeValue = reqData[rule.target];
 
     // in
     if (!Array.isArray(rule.comparator)) {
+      let ruleTarget = rule.target.toLowerCase();
+      let ruleComparatorModel = rule.comparator.model.toLowerCase();
+      if (ruleTarget !== ruleComparatorModel) {
+        failArr.push(false);
+        invalidRules = true;
+        return 'rule ' + rule.id + ': invalid: rule.target ' + rule.target + ' does not match comparator model ' + rule.comparator.model;
+      }
       let where = {};
-      where[rule.comparator.attribute] = reqData[rule.attribute];
+      where[rule.comparator.attribute] = reqData[rule.target];
       let instance = await models[rule.comparator.model].findAll({
         where
       })
       if (instance.length > 0) {
-        return(true);
+        return 'rule ' + rule.id + ': passed';
       } else {
-        return 'provided ' + rule.attribute + ' ' + reqAttributeValue + ' is not ' + rule.operator + ' model ' + rule.comparator.model + ' ' + rule.comparator.attribute;
+        failArr.push(false);
+        return 'rule ' + rule.id + ': provided ' + rule.target + ' ' + reqAttributeValue + ' is not ' + rule.operator + ' model ' + rule.comparator.model + ' attribute ' + rule.comparator.attribute;
       }
     }
 
@@ -32,20 +44,22 @@ exports.checkEligibility = async (req, res) => {
     if (Array.isArray(rule.comparator) && rule.comparator.length == 2) {
       rule.comparator.sort();
       // date or numerical
-      if (rule.attribute == 'date') {
+      if (rule.target == 'date') {
         let date = new Date().getTime();
         if (date > rule.comparator[0] && date < rule.comparator[1]) {
-          return true;
+          return 'rule ' + rule.id + ': passed';
         } else {
-          let date1 = new Date(parseInt(rule.comparator[0]));
-          let date2 = new Date(parseInt(rule.comparator[1]));
-          return 'today\'s ' + rule.attribute + ' ' + new Date(date) + ' is not ' + rule.operator + ' ' + date1 + ' & ' + date2;
+          let date1 = new Date(parseInt(rule.comparator[0])).toISOString();
+          let date2 = new Date(parseInt(rule.comparator[1])).toISOString();
+          failArr.push(false);
+          return 'rule ' + rule.id + ': today\'s ' + rule.target + ' ' + new Date(date).toISOString() + ' is not ' + rule.operator + ' ' + date1 + ' & ' + date2;
         }
       } else {
         if (reqAttributeValue > rule.comparator[0] && reqAttributeValue < rule.comparator[1]) {
-          return true;
+          return 'rule ' + rule.id + ': passed';
         } else {
-          return 'provided ' + rule.attribute + ' ' + reqAttributeValue + ' is not ' + rule.operator + ' ' + rule.comparator[0] + ' & ' + rule.comparator[1];
+          failArr.push(false);
+          return 'rule ' + rule.id + ': provided ' + rule.target + ' ' + reqAttributeValue + ' is not ' + rule.operator + ' ' + rule.comparator[0] + ' & ' + rule.comparator[1];
         }
       }
     }
@@ -70,25 +84,34 @@ exports.checkEligibility = async (req, res) => {
       compare = (a, b) => a = b;
         break;
       default:
-        return 'Check rule validity'
+        failArr.push(false);
+        invalidRules = true;
+        return 'Check rule ' + rule.id + ' validity'
       }
       if (compare(reqAttributeValue, rule.comparator[0])) {
-        return true;
+        return 'rule ' + rule.id + ': passed';
       } else {
-        return 'provided ' + rule.attribute + ' ' + reqAttributeValue + ' is not ' + rule.operator + ' ' + rule.comparator;
+        failArr.push(false);
+        return 'rule ' + rule.id + ': provided ' + rule.target + ' ' + reqAttributeValue + ' is not ' + rule.operator + ' ' + rule.comparator;
       }
-
     }
-
-    return('e');
+    failArr.push(false);
+    invalidRules = true;
+    return 'rule ' + rule.id + ': invalid: rule failed for unknown reason, check eligibility controller';
   })
   .catch((e) => {
     console.log(e);
   });
 
-  console.log(passArr);
+  let isEligible = (failArr.length === 0);
 
-  // const categories = await Category.findAll({});
-  return res.status(200).json('categories');
+  if (invalidRules) {
+    isEligible = 'invalid rules';
+  }
+
+  return res.status(200).json({
+    eligible: isEligible,
+    reason: explanationArr
+  });
 
 };
