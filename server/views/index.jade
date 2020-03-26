@@ -24,7 +24,7 @@ block content
                 |    "seller":"ndrwptrsn",
                 |    "category":"33021"
                 | }
-            p response
+            p 200 response
             pre
               p
                 | {
@@ -37,7 +37,7 @@ block content
         .code-block
           code GET http://localhost:3000/api/rules
           .code-block
-            p response
+            p 200 response
             pre
               p
               | [
@@ -97,7 +97,7 @@ block content
           br
           code GET http://localhost:3000/api/rules/eligible_seller
           .code-block
-            p response
+            p 200 response
             pre
               p
               | {
@@ -116,60 +116,46 @@ block content
       p add eligibility rule
       .code-contain
         .code-block
-          code POST http://localhost:3000/
-          .code-block
-            p request
-            pre
-              p
-              | {
-              |  "label": "summer_sale",
-              |  "attribute": "date",
-              |  "operator": "between",
-              |  "comparator": [
-              |   "1591230018000",
-              |   "1593822018000"
-              |  ]
-              | }
-            p response
-            pre
-              p
-              | {
-              |  "id": 5,
-              |  "label": "summer_sale",
-              |  "attribute": "date",
-              |  "operator": "between",
-              |  "comparator": [
-              |   "1591230018000",
-              |   "1593822018000"
-              |  ]
-              |  "createdAt": "2020-03-25T11:38:44.694Z",
-              |  "updatedAt": "2020-03-25T11:38:44.694Z"
-              | }
-
-      p remove eligibility rule by id or label
-      .code-contain
-        .code-block
-          code DELETE http://localhost:3000/api/rules/1
-          br
-          code DELETE http://localhost:3000/api/rules/eligible_seller
-          .code-block
-            p response
-            pre
-              p
-                | "rule with id: 1 and label: eligible_seller removed"
+          code POST http://localhost:3000/api/rules
+            .code-block
+              pre
+                p
+                | {
+                |  "label": "summer_sale",
+                |  "attribute": "date",
+                |  "operator": "between",
+                |  "comparator": [
+                |   "1591230018000",
+                |   "1593822018000"
+                |  ]
+                | }
+              p 201 response
+              pre
+                p
+                | {
+                |  "id": 5,
+                |  "label": "summer_sale",
+                |  "attribute": "date",
+                |  "operator": "between",
+                |  "comparator": [
+                |   "1591230018000",
+                |   "1593822018000"
+                |  ]
+                |  "createdAt": "2020-03-25T11:38:44.694Z",
+                |  "updatedAt": "2020-03-25T11:38:44.694Z"
+                | }
 
       p update eligibility rule
       .code-contain
         .code-block
           code PATCH http://localhost:3000/api/rules/1
           .code-block
-            p request
             pre
               p
                 | {
                 |    "label": "enrolled_seller"
                 | }
-            p response
+            p 200 response
             pre
               p
               | {
@@ -185,14 +171,26 @@ block content
               |  "updatedAt": "2020-03-25T11:38:44.694Z"
               | }
 
+      p remove eligibility rule by id or label
+      .code-contain
+        .code-block
+          code DELETE http://localhost:3000/api/rules/1
+          br
+          code DELETE http://localhost:3000/api/rules/enrolled_seller
+          .code-block
+            p 200 response
+            pre
+              p
+                | "rule with id: 1 and label: enrolled_seller removed"
+
 
 
       p get all enrolled sellers
       .code-contain
         .code-block
-          code GET http://localhost:3000/sellers
+          code GET http://localhost:3000/api/sellers
           .code-block
-            p response
+            p 200 response
             pre
               p
                 | [
@@ -210,13 +208,12 @@ block content
                 |  },
                 |]
 
-
       p get enrolled seller by username
       .code-contain
         .code-block
-          code GET http://localhost:3000/sellers/ndrwptrsn
+          code GET http://localhost:3000/api/sellers/ndrwptrsn
           .code-block
-            p response
+            p 200 response
             pre
               p
                 | {
@@ -226,19 +223,17 @@ block content
                 |   "updatedAt": "2020-03-25T11:38:44.756Z"
                 | }
 
-
       p add seller to enrollment
       .code-contain
         .code-block
-          code POST http://localhost:3000/sellers
+          code POST http://localhost:3000/api/sellers
           .code-block
-            p request
             pre
               p
                 | {
                 |    "username": "atman84"
                 | }
-            p response
+            p 201 response
             pre
               p
               | {
@@ -248,106 +243,88 @@ block content
               |   "updatedAt": "2020-03-25T11:38:44.756Z"
               | }
 
-
       p remove seller from enrollment
       .code-contain
         .code-block
-          code DELETE http://localhost:3000/atman84
+          code DELETE http://localhost:3000/api/atman84
           .code-block
-            p response
+            p 200 response
             pre
               p
                 | "seller atman84 removed"
 
 
 
-      p get all eligible categories
+      p get all categories from pre-approved list
       .code-contain
         .code-block
-          code POST http://localhost:3000/
+          code GET http://localhost:3000/api/categories
           .code-block
-            p request
+            p 200 response
             pre
               p
-                | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
-                | }
-            p response
-            pre
-              p
-                | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
-                | }
+                | [
+                |  {
+                |    "id": 1,
+                |    "ebay_id": 12345,
+                |    "createdAt": "2020-03-25T11:38:44.756Z",
+                |    "updatedAt": "2020-03-25T11:38:44.756Z"
+                |  },
+                |  {
+                |    "id": 2,
+                |    "ebay_id": 1234,
+                |    "createdAt": "2020-03-25T17:31:41.385Z",
+                |    "updatedAt": "2020-03-25T17:31:41.385Z"
+                |  },
+                |  {
+                |    "id": 3,
+                |    "ebay_id": 123,
+                |    "createdAt": "2020-03-25T17:31:41.385Z",
+                |    "updatedAt": "2020-03-25T17:31:41.385Z"
+                |  },
+                |]
 
-
-      p get eligible category by ebay_id
+      p get category from pre-approved list
       .code-contain
         .code-block
-          code POST http://localhost:3000/
+          code GET http://localhost:3000/api/categories/12345
           .code-block
-            p request
+            p 200 response
             pre
               p
                 | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
-                | }
-            p response
-            pre
-              p
-                | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
+                |   "id": 1,
+                |   "ebay_id": 12345,
+                |   "createdAt": "2020-03-25T11:38:44.756Z",
+                |   "updatedAt": "2020-03-25T11:38:44.756Z"
                 | }
 
-
-      p add eligible category
+      p add category to pre-approved list
       .code-contain
         .code-block
-          code POST http://localhost:3000/
+          code POST http://localhost:3000/api/sellers
           .code-block
-            p request
             pre
               p
                 | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
+                |    "ebay_id": 123
                 | }
-            p response
+            p 201 response
             pre
               p
-                | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
-                | }
+              | {
+              |   "id": 3,
+              |   "ebay_id": 123,
+              |   "createdAt": "2020-03-25T11:38:44.756Z",
+              |   "updatedAt": "2020-03-25T11:38:44.756Z"
+              | }
 
-
-      p remove eligible category
+      p remove category from pre-approved list
       .code-contain
         .code-block
-          code POST http://localhost:3000/
+          code DELETE http://localhost:3000/api/categories/123
           .code-block
-            p request
+            p 200 response
             pre
               p
-                | {
-                |    "title": "!959 Goya Nylon String Guitar",
-                |    "price": 31500,
-                |    "seller":"ndrwptrsn",
-                |    "category":"33021"
-                | }
-            p response
-            pre
-              p
-                | {
-                |    "elligible": false,
-                |    "reason": "item.price 34999 !>= price_minimum 40000"
-                | }
+                | "category 123 removed"
