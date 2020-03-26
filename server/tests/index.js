@@ -7,82 +7,71 @@ const _ = require('lodash');
 chai.use(chaiHttp);
 chai.should();
 
-// async function truncate() {
-//   return await Promise.all(
-//     _.map(Object.keys(models), (key) => {
-//       if (['sequelize', 'Sequelize'].includes(key)) return null;
-//       console.log(key + ' cleared!');
-//       return models[key].destroy({ truncate : true, restartIdentity: true, cascade: true });
-//     })
-//   );
-// };
+
+// describe("regional shipping program eligibility tests", async () => {
 //
-// truncate();
-
-describe("regional shipping program eligibility tests", async () => {
-
-  describe("eligibility calls", async () => {
-
-    // it("should return not eligible", (done) => {
-    //   chai.request(app)
-    //     .get('/api/rules')
-    //     .end((err, res) => {
-    //       res.should.have.status(200);
-    //       res.body.should.be.a('array');
-    //     done();
-    //   });
-    // });
-    //
-    // it("should return not eligible", (done) => {
-    //   chai.request(app)
-    //     .get('/api/rules')
-    //     .end((err, res) => {
-    //       res.should.have.status(200);
-    //       res.body.should.be.a('array');
-    //     done();
-    //   });
-    // });
-    //
-    // it("should return not eligible", (done) => {
-    //   chai.request(app)
-    //     .get('/api/rules')
-    //     .end((err, res) => {
-    //       res.should.have.status(200);
-    //       res.body.should.be.a('array');
-    //     done();
-    //   });
-    // });
-    //
-    // it("should return eligible", (done) => {
-    //   chai.request(app)
-    //     .get('/api/rules')
-    //     .end((err, res) => {
-    //       res.should.have.status(200);
-    //       res.body.should.be.a('array');
-    //     done();
-    //   });
-    // });
-    //
-    // it("should return eligible", (done) => {
-    //   chai.request(app)
-    //     .get('/api/rules')
-    //     .end((err, res) => {
-    //       res.should.have.status(200);
-    //       res.body.should.be.a('array');
-    //     done();
-    //   });
-    // });
-    //
-    // it("should return eligible", (done) => {
-    //   chai.request(app)
-    //     .get('/api/rules')
-    //     .end((err, res) => {
-    //       res.should.have.status(200);
-    //       res.body.should.be.a('array');
-    //     done();
-    //   });
-    // });
-
-  });
-
-});
+//   describe("eligibility calls", async () => {
+//
+//     // it("should return not eligible", (done) => {
+//     //   chai.request(app)
+//     //     .get('/api/rules')
+//     //     .end((err, res) => {
+//     //       res.should.have.status(200);
+//     //       res.body.should.be.a('array');
+//     //     done();
+//     //   });
+//     // });
+//     //
+//     // it("should return not eligible", (done) => {
+//     //   chai.request(app)
+//     //     .get('/api/rules')
+//     //     .end((err, res) => {
+//     //       res.should.have.status(200);
+//     //       res.body.should.be.a('array');
+//     //     done();
+//     //   });
+//     // });
+//     //
+//     // it("should return not eligible", (done) => {
+//     //   chai.request(app)
+//     //     .get('/api/rules')
+//     //     .end((err, res) => {
+//     //       res.should.have.status(200);
+//     //       res.body.should.be.a('array');
+//     //     done();
+//     //   });
+//     // });
+//     //
+//     // it("should return eligible", (done) => {
+//     //   chai.request(app)
+//     //     .get('/api/rules')
+//     //     .end((err, res) => {
+//     //       res.should.have.status(200);
+//     //       res.body.should.be.a('array');
+//     //     done();
+//     //   });
+//     // });
+//     //
+//     // it("should return eligible", (done) => {
+//     //   chai.request(app)
+//     //     .get('/api/rules')
+//     //     .end((err, res) => {
+//     //       res.should.have.status(200);
+//     //       res.body.should.be.a('array');
+//     //     done();
+//     //   });
+//     // });
+//     //
+//     // it("should return eligible", (done) => {
+//     //   chai.request(app)
+//     //     .get('/api/rules')
+//     //     .end((err, res) => {
+//     //       res.should.have.status(200);
+//     //       res.body.should.be.a('array');
+//     //     done();
+//     //   });
+//     // });
+//
+//   });
+//
+// });
