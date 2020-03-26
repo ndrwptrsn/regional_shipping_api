@@ -8,25 +8,21 @@ apiRouter.get('/', function(req, res, next) {
   res.render('index', { title: 'Regional Shipping API' });
 });
 
-// check item eligibility - (/api/)
-apiRouter.post('/', function(req, res, next) {
-
-
-
-
-
-  res.send('check whether the item is elligile');
-});
-
 // load validators
+const EligibilityValidator = require('../middleware/validators/EligibilityValidator');
+
 const SellerValidator = require('../middleware/validators/SellerValidator');
 const RuleValidator = require('../middleware/validators/RuleValidator');
 const CategoryValidator = require('../middleware/validators/CategoryValidator');
 
 // load controllers
+const EligibilityController = require('../controllers/EligibilityController');
+
 const SellerController = require('../controllers/SellerController');
 const RuleController = require('../controllers/RuleController');
 const CategoryController = require('../controllers/CategoryController');
+
+apiRouter.post('/', EligibilityValidator.checkEligibility, EligibilityController.checkEligibility);
 
 // rule routes
 apiRouter.get('/rules', RuleValidator.getRules, RuleController.getRules);

@@ -38,6 +38,13 @@ module.exports = {
           comparator: JSON.stringify(['1591230018000', '1593822018000']),
           createdAt: new Date(),
           updatedAt: new Date()
+        }, {
+          label: 'pricerange',
+          attribute: 'price',
+          operator: 'between',
+          comparator: JSON.stringify([59999, 57777]),
+          createdAt: new Date(),
+          updatedAt: new Date()
         }], {})
       ])
     })
