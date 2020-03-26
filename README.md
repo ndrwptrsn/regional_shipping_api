@@ -139,7 +139,7 @@ POST http://localhost:3000/api/rules
 }
 ```
 
-Adding 'categorical' rules, i.e. rules that use the 'in' operator to check against a list stored in the db, will require a adding a new model, migration, and controller. Hopefully between the existing code and the commands below, this task is straight-forward, but as it is now, it cannot be done programmatically.
+Adding 'categorical' rules, i.e. rules that use the 'in' operator to check against a list stored in the db, may require a adding a new model, migration, or controller if the model and/or attribute does not already exist in the db.
 
 ```
 add 'categorical' rule
