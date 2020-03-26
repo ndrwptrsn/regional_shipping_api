@@ -10,8 +10,9 @@ I prioritized API functionality (dynamic, stored rules feature, exposed endpoint
 Each eligibility rule uses an operator (<, >, <=, =>, =, in, between), a comparator (either a list of something in the db to check against, a value, or range of values) and a target (the part of the incoming request that gets checked). Each rule gets processed, even if prior rules didn't pass. The response consists of whether or not the item is eligible and why:
 
 
-##### Eligibility Endpoint
+
 ```
+check eligibility
 POST http://localhost:3000/api
 
 {
@@ -35,8 +36,8 @@ POST http://localhost:3000/api
 }
 ```
 
-##### Get all rules endpoint
 ```
+get eligibility rules
 GET http://localhost:3000/api/rules
 
 [
