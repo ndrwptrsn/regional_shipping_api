@@ -162,7 +162,29 @@ I had a ton of fun working on this! I put some serious time in and I hope it sho
 
 Thank you!
 
-# Setup
+# Try it out
+
+```
+
+git clone https://github.com/ndrwptrsn/regional_shipping_api.git
+
+cd regional_shipping_api/
+
+docker-compose run --rm node yarn
+
+docker-compose run --rm node yarn run test
+
+docker-compose up
+
+```
+
+Navigate to http://localhost:3000/api to see docs
+
+Use PostMan collection to hit endpoints and try it out!
+
+
+
+## Commands
 
 #### Start
 docker-compose up
@@ -173,7 +195,7 @@ docker-compose run --rm node yarn test
 #### Migrate
 docker-compose run --rm node yarn run migrate
 
-## Sequelize Client
+### Sequelize Client
 
 #### Generate Model (includes migration)
 docker-compose run --rm node yarn run sequelize model:create  --name Seller --attributes name:string,eligible:boolean
