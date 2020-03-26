@@ -5,7 +5,7 @@ Andrew Peterson March 2020
 
 Thank you for reviewing my assessment, I had a lot of fun working on it!
 
-I prioritized API functionality (dynamic, stored rules feature, exposed endpoints) and API integrity (validations, tests) over front-end tooling (which seems like the kind of thing that would be added to a pre-existing admin panel anyway). I did spruce up the docs a bit: http://localhost:3000/api
+I prioritized API functionality (dynamic stored rules feature, exposed endpoints) and API integrity (validations, tests) over front-end tooling (which seems like the kind of thing that would be added to a pre-existing admin panel anyway). I did spruce up the docs a bit: http://localhost:3000/api
 
 Each eligibility rule uses an operator (<, >, <=, =>, =, in, between), a comparator (either a list of something in the db to check against, a value, or range of values) and a target (the part of the incoming request that gets checked). Each rule gets processed, even if prior rules didn't pass. The response consists of whether or not the item is eligible and why:
 
@@ -55,7 +55,7 @@ GET http://localhost:3000/api/rules
     },
     {
         "id": 2,
-        "label": "eligible_category",
+        "label": "pre_approved_category",
         "target": "category",
         "operator": "in",
         "comparator": {
@@ -69,7 +69,7 @@ GET http://localhost:3000/api/rules
         "id": 3,
         "label": "minimum_price",
         "target": "price",
-        "operator": ">",
+        "operator": ">=",
         "comparator": [
             1000
         ],
@@ -106,7 +106,7 @@ GET http://localhost:3000/api/rules
 
 Because all of the eligibility rules are stored in the db using the same format, there are many, many permutations of possible rules that can be created, updated, and destroyed programmatically without having to touch the code at all. This is the strength of this approach.
 
-To that end, I focused my efforts on validations and tests instead of creating forms, buttons, and sliders on a front-end panel. Most of the validations are to make sure that non-sensical rule objects do not get made. For example, a rule object which is looking for a price between [1099] doesn't make sense but a rule object looking for a price between [3599, 1099] does (order gets sorted, no big deal). I encourage you to try making rules that don't make sense as I did my best to cover these scenarios with specific, helpful error messaging. It is possible to update a rule so that it is no longer valid. In these cases I tried to provide messaging at the point of checking eligibility - if any of the rules are invalid, the eligibility endpoint will let you know.
+To that end, I focused my efforts on validations and tests instead of creating forms, buttons, and sliders on a front-end panel. It seems to make more sense to integrate these endpoints into a pre-existing admin front-end. To that end, most of the validations make sure that non-sensical rule objects do not get made. For example, a rule object which is looking for a price between [1099] doesn't make sense but a rule object looking for a price between [3599, 1099] does (order gets sorted, no big deal). I encourage you to try making rules that don't make sense as I did my best to cover these scenarios with specific, helpful error messaging. It is possible to update a rule so that it is no longer valid. In these cases I tried to provide messaging at the point of checking eligibility - if any of the rules are invalid, the eligibility endpoint will let you know.
 
 #### Adding Rules
 
