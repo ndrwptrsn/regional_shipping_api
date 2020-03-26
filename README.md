@@ -103,11 +103,16 @@ GET http://localhost:3000/api/rules
 ]
 ```
 
-##### Rules in plain english:
+* Rules in plain english:
+
 Rule 1: check to see if the request item's seller is in the Seller table in the username column.
+
 Rule 2: check to see if the request item's category is in the Category table in the ebay_id column.
+
 Rule 3: check to see if the request items's price is great than or equal to 1000 cents ($10.00).
+
 Rule 4: check to see if the date of the request is between ...March and ...July.
+
 Rule 5: check to see if the request item's price is between 57777 cents ($577.77) and 59999 cents ($599.99).
 
 Because all of the eligibility rules are stored in the db using the same format, there are many, many permutations of possible rules that can be created, updated, and destroyed programmatically without having to touch the code at all. This is the strength of this approach.
