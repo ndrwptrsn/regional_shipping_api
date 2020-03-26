@@ -1,6 +1,7 @@
 const express = require('express');
 const router = require('express').Router();
 const apiRouter = require('express').Router();
+const models = require('../database/models');
 
 // view api docs
 apiRouter.get('/', function(req, res, next) {
@@ -33,7 +34,7 @@ apiRouter.get('/rules', RuleValidator.getRules, RuleController.getRules);
 apiRouter.get('/rules/:id', RuleValidator.getRule, RuleController.getRule);
 apiRouter.delete('/rules/:id', RuleValidator.removeRule, RuleController.removeRule);
 apiRouter.post('/rules', RuleValidator.addRule, RuleController.addRule);
-// apiRouter.post('/rules/:id', RuleValidator.updateRule, RuleController.addRule);
+apiRouter.patch('/rules/:id', RuleValidator.updateRule, RuleController.updateRule);
 
 // category routes
 

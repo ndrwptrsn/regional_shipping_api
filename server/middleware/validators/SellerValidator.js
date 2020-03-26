@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const { body, param, query } = require('express-validator');
-const { checkValidationErrors } = require('../AppMiddleware');
+const { checkValidationErrors } = require('../');
 
 const routesValidator = {
   getSellers: [],

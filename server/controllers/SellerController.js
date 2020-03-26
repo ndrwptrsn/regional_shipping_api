@@ -15,7 +15,9 @@ exports.getSeller = async (req, res) => {
       username: username
     }
   });
-  return res.status(200).json(seller || 'seller not found');
+  let status;
+  seller ? status = 200 : status = 404;
+  return res.status(status).json(seller || 'seller not found');
 };
 
 exports.addSeller = async (req, res) => {
@@ -48,6 +50,6 @@ exports.removeSeller = async (req, res) => {
     await seller.destroy();
     return res.status(200).json('seller ' + username + ' removed');
   } else {
-    return res.status(200).json('seller ' + username + ' not found');
+    return res.status(404).json('seller ' + username + ' not found');
   }
 };
