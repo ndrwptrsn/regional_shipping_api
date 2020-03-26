@@ -113,9 +113,11 @@ GET http://localhost:3000/api/rules
 ]
 ```
 
-Because all of the eligibility rules are stored in the db using the same format, there are many, many permutations of possible rules that can be created, updated, and destroyed programmatically without having to touch the code at all. This is the strength of this approach.
+Because all of the eligibility rules are stored in the db using the same format, there are many, many permutations of possible rules that can be created, updated, and destroyed programmatically without having to touch the code at all. This is the strength of this approach. To that end, I focused my efforts on validations and tests instead of creating forms, buttons, and sliders for a mock front-end panel.
 
-To that end, I focused my efforts on validations and tests instead of creating forms, buttons, and sliders on a front-end panel. It seems to make more sense to integrate these endpoints into a pre-existing admin panel anyway. To that end, most of the validations present make sure that non-sensical rule objects do not get made. For example, a rule object which is looking for a price between [1099] doesn't make sense but a rule object looking for a price between [3599, 1099] does (order gets sorted, no big deal). I encourage you to try making rules that don't make sense as I did my best to cover these scenarios with specific, helpful error messaging. It is possible to update a rule so that it is no longer valid. In these cases I tried to provide messaging at the point of checking eligibility - if any of the rules are invalid, the eligibility endpoint will let you know.
+The validations present make sure that non-sensical rule objects do not get made. For example, a rule object which is looking for a price between [1099] doesn't make sense but a rule object looking for a price between [3599, 1099] does (order gets sorted, no big deal). I encourage you to try making rules that don't make sense as I did my best to cover these scenarios with specific, helpful error messaging. It is possible to update a rule so that it is no longer valid. In these cases I tried to provide messaging at the point of checking eligibility - if any of the rules are invalid, the eligibility endpoint will let you know.
+
+The test coverage isn't great (~25%), as I didn't have the time. However, I wrote tests for many of the add rule validations.
 
 #### Adding Rules
 
