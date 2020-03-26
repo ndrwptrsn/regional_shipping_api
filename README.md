@@ -53,6 +53,8 @@ GET http://localhost:3000/api/rules
         "createdAt": "2020-03-26T19:17:37.203Z",
         "updatedAt": "2020-03-26T19:18:22.555Z"
     },
+    // check to see if request.seller is in the Seller table in the username column
+
     {
         "id": 2,
         "label": "pre_approved_category",
@@ -105,7 +107,7 @@ GET http://localhost:3000/api/rules
 
 #### Rules in plain english:
 
-* Rule 1: check to see if request.seller is in the Seller table in the username column.
+* Rule 1: .
 
 * Rule 2: check to see if request.category is in the Category table in the ebay_id column.
 
