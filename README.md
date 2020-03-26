@@ -67,6 +67,8 @@ GET http://localhost:3000/api/rules
         "createdAt": "2020-03-26T19:17:37.203Z",
         "updatedAt": "2020-03-26T19:17:37.203Z"
     },
+    // check to see if request.category is in the Category table in the ebay_id column.
+
     {
         "id": 3,
         "label": "minimum_price",
@@ -78,6 +80,8 @@ GET http://localhost:3000/api/rules
         "createdAt": "2020-03-26T19:17:37.203Z",
         "updatedAt": "2020-03-26T19:17:37.203Z"
     },
+    // check to see if request.price is great than or equal to 1000 cents ($10.00).
+
     {
         "id": 4,
         "label": "active_season",
@@ -90,6 +94,8 @@ GET http://localhost:3000/api/rules
         "createdAt": "2020-03-26T19:17:37.203Z",
         "updatedAt": "2020-03-26T19:17:37.203Z"
     },
+    // check to see if the date of the request is between ...March and ...July.
+
     {
         "id": 5,
         "label": "pricerange",
@@ -102,20 +108,10 @@ GET http://localhost:3000/api/rules
         "createdAt": "2020-03-26T19:17:37.203Z",
         "updatedAt": "2020-03-26T19:17:37.203Z"
     }
+    // check to see if request.price is between 57777 cents ($577.77) and 59999 cents ($599.99).
+
 ]
 ```
-
-#### Rules in plain english:
-
-* Rule 1: .
-
-* Rule 2: check to see if request.category is in the Category table in the ebay_id column.
-
-* Rule 3: check to see if request.price is great than or equal to 1000 cents ($10.00).
-
-* Rule 4: check to see if the date of the request is between ...March and ...July.
-
-* Rule 5: check to see if request.price is between 57777 cents ($577.77) and 59999 cents ($599.99).
 
 Because all of the eligibility rules are stored in the db using the same format, there are many, many permutations of possible rules that can be created, updated, and destroyed programmatically without having to touch the code at all. This is the strength of this approach.
 
