@@ -106,11 +106,43 @@ GET http://localhost:3000/api/rules
 
 Because all of the eligibility rules are stored in the db using the same format, there are many, many permutations of possible rules that can be created, updated, and destroyed programmatically without having to touch the code at all. This is the strength of this approach.
 
-To that end, I focused my efforts on validations and tests instead of menus, buttons, and sliders. Most of the validations are to make sure that non-sensical rule objects do not get made. For example, a rule object which is looking for a price between [1099] doesn't make sense but a rule object looking for a price between [3599, 1099] does (order gets sorted, no big deal. negative values thrown out, however). I encourage you to try making rules that don't make sense as I did my best to cover these scenarios with specific, helpful error messaging. It is possible to update a rule so that it is no longer valid. In these cases I tried to provide messaging at the point of checking eligibility - if any of the rules are invalid, the eligibility endpoint will let you know.
+To that end, I focused my efforts on validations and tests instead of creating forms, buttons, and sliders on a front-end panel. Most of the validations are to make sure that non-sensical rule objects do not get made. For example, a rule object which is looking for a price between [1099] doesn't make sense but a rule object looking for a price between [3599, 1099] does (order gets sorted, no big deal). I encourage you to try making rules that don't make sense as I did my best to cover these scenarios with specific, helpful error messaging. It is possible to update a rule so that it is no longer valid. In these cases I tried to provide messaging at the point of checking eligibility - if any of the rules are invalid, the eligibility endpoint will let you know.
 
 #### Adding Rules
 
-'Arithmetic' rules are easy to add, simply post to api/rules with a value or value range and a target attribute. Adding 'categorical' rules, i.e. rules that use the 'in' operator to check against a list stored in the db, will require a adding a new model, migration, and controller. Hopefully between the existing code and the commands below, this task is straight-forward, but as it is now, it cannot be done programmatically.
+'Arithmetic' rules are easy to add, simply post to api/rules with a value or value range and a target attribute. Date uses date.now() internally, the only allowed target which does not need to be supplied in the eligibility check request.
+
+```
+add 'arithmetic' rule
+POST http://localhost:3000/api/rules
+
+{
+ "label": "summer_sale",
+ "target": "date",
+ "operator": "between",
+ "comparator": [
+  "1591230018000",
+  "1593822018000"
+ ]
+}
+```
+
+Adding 'categorical' rules, i.e. rules that use the 'in' operator to check against a list stored in the db, will require a adding a new model, migration, and controller. Hopefully between the existing code and the commands below, this task is straight-forward, but as it is now, it cannot be done programmatically.
+
+```
+add 'categorical' rule
+POST http://localhost:3000/api/rules
+
+{
+ "label": "summer_sale",
+ "target": "seller",
+ "operator": "in",
+ "comparator": {
+   "model": "Seller",
+   "attribute": "username"
+ }
+}
+```
 
 #### Final Thoughts
 
