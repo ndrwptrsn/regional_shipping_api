@@ -3,9 +3,10 @@ Andrew Peterson March 2020
 
 ## Notes
 
-Thank you for reviewing my assessment, I had a lot of fun working on it!
+Thank you for reviewing my assessment.
 
-The API is a Dockerized Express application using Postgres for data storage. The data structure is three tables, Sellers, Categories, and Rules.
+The API is a Dockerized Express application using Postgres for data storage. The data structure is three tables:
+Sellers, Categories, and Rules.
 
 I prioritized API functionality (dynamic stored rules feature, exposed endpoints) and API integrity (validations, tests) over front-end tooling (which seems like the kind of thing that would be added to a pre-existing admin panel anyway). I did spruce up the docs a bit: http://localhost:3000/api
 
@@ -118,7 +119,7 @@ Because all of the eligibility rules are stored in the db using the same format,
 
 The validations present make sure that non-sensical rule objects do not get made. For example, a rule object which is looking for a price between [1099] doesn't make sense but a rule object looking for a price between [3599, 1099] does (order gets sorted, no big deal). I encourage you to try making rules that don't make sense as I did my best to cover these scenarios with specific, helpful error messaging. It is possible to update a rule so that it is no longer valid. In these cases I tried to provide messaging at the point of checking eligibility - if any of the rules are invalid, the eligibility endpoint will let you know.
 
-The test coverage isn't great (~25%), as I didn't have the time. However, I wrote tests for many of the add rule validations.
+The test coverage isn't great as I didn't have the time. However, I wrote tests for many of the add rule validations.
 
 #### Adding Rules
 
@@ -156,12 +157,6 @@ POST http://localhost:3000/api/rules
 }
 ```
 
-#### Final Thoughts
-
-I had a ton of fun working on this! I put some serious time in and I hope it shows. The API could definitely use some refactoring, but I wanted to get it done. I chose not to add authentication to make it easy to play with. Along the same lines I've included a PostMan collection so you don't have to make your own.
-
-Thank you!
-
 # Try it out
 
 ```
@@ -191,6 +186,9 @@ docker-compose up
 
 #### Run Tests
 docker-compose run --rm node yarn test
+
+#### Seed
+docker-compose run --rm node yarn seed
 
 #### Migrate
 docker-compose run --rm node yarn run migrate
