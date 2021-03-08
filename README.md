@@ -1,6 +1,26 @@
 # Regional Shipping Eligibility API
 Andrew Peterson March 2020
 
+# Try it out
+
+```
+
+git clone https://github.com/ndrwptrsn/regional_shipping_api.git
+
+cd regional_shipping_api/
+
+docker-compose run --rm node yarn
+
+docker-compose run --rm node yarn run test
+
+docker-compose up
+
+```
+
+Navigate to http://localhost:3000/api to see docs
+
+Use PostMan collection to hit endpoints and try it out!
+
 ## Notes
 
 Thank you for reviewing my assessment.
@@ -156,26 +176,6 @@ POST http://localhost:3000/api/rules
  }
 }
 ```
-
-# Try it out
-
-```
-
-git clone https://github.com/ndrwptrsn/regional_shipping_api.git
-
-cd regional_shipping_api/
-
-docker-compose run --rm node yarn
-
-docker-compose run --rm node yarn run test
-
-docker-compose up
-
-```
-
-Navigate to http://localhost:3000/api to see docs
-
-Use PostMan collection to hit endpoints and try it out!
 
 
 
